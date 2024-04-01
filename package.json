@@ -9,16 +9,29 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@clerk/nextjs": "^4.29.9",
+    "@clerk/themes": "^1.7.10",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@livekit/components-react": "^2.0.5",
+    "@livekit/components-styles": "^1.0.11",
+    "@prisma/client": "^5.11.0",
+    "framer-motion": "^11.0.24",
+    "livekit-client": "^2.0.10",
+    "livekit-server-sdk": "^2.1.2",
+    "next": "14.1.4",
+    "prisma": "^5.11.0",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.1.4"
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
+    "@types/node": "^20.12.2",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.1.4"
+    "eslint-config-next": "14.1.4",
+    "typescript": "^5"
   }
 }
