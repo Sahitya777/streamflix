@@ -7,12 +7,15 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if(req.method==="GET"){
-    const username=req.body;
+    const {username}=req.query;
     const user=await db.user.findUnique({
         where:{
-            username:username
+            username:String(username)
         }
     })
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
     return res.status(200).json({user:user})
   }
 }
