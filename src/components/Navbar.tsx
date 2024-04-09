@@ -9,7 +9,7 @@ const Navbar = () => {
     const [value, setvalue] = useState<any>("");
     const router=useRouter();
   return (
-    <Box display="flex" width="100%" background="#252731" justifyContent="space-between" padding="16px" >
+    <Box display="flex" width="100%" background="#252731" justifyContent="space-between" padding="16px" color="white" >
             <Box display="flex"  gap="1rem" textAlign="center" alignItems="center">
                 <Box background="white" borderRadius="50%" width="35px" height="35px" display="flex" justifyContent="center" alignItems="center">
                 <Image

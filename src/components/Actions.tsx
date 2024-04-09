@@ -8,7 +8,7 @@ import { SignInButton, UserButton, useAuth } from "@clerk/nextjs";
 export const Actions = () => {
     const { isLoaded, userId, sessionId, getToken } = useAuth();
   return (
-    <Box className="flex items-center justify-end gap-x-2 ml-4 lg:ml-0">
+    <Box className="flex items-center justify-end gap-x-2 ml-4 lg:ml-0" color="white">
       {!userId && (
         <SignInButton>
           <Button size="sm" variant="primary">
@@ -28,7 +28,7 @@ export const Actions = () => {
           >
             <Link href={'u'} style={{display:"flex",gap:"0.4rem"}}>
               <Clapperboard />
-              <Text className="hidden lg:block" fontSize="18px" mt="0.1rem">
+              <Text className="hidden lg:block" fontSize="18px" mt="0.1rem" color="white" fontWeight="400">
                 Dashboard
               </Text>
             </Link>

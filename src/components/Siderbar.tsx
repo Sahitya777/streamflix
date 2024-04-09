@@ -13,7 +13,10 @@ const Siderbar = () => {
   const [collapsed, setcollapsed] = useState(false);
   const { isSignedIn, user, isLoaded } = useUser();
   const [allUsers, setallUsers] = useState<any>([]);
+  const [followedUsers, setfollowedUsers] = useState<any>([])
   const router=useRouter();
+  const {  userId, sessionId, getToken } = useAuth();
+  console.log(user,"us")
   useEffect(()=>{
     const fetchData=async()=>{
       const res=await axios.get('/api/scripts/getRecommded');
@@ -24,6 +27,20 @@ const Siderbar = () => {
     fetchData()
   },[])
 
+  useEffect(()=>{
+    try{
+        const fetchFollowers=async()=>{
+            const res=await axios.get(`/api/scripts/getfollowers?userId=${userId}`)
+            setfollowedUsers(res?.data?.followedusers)
+        }
+        if(userId){
+          fetchFollowers()
+        }
+    }catch(err){
+        console.log(err,"err in get follower")
+    }
+},[userId])
+
   return (
     <Box
       bg="#171821"
@@ -31,6 +48,7 @@ const Siderbar = () => {
       left="0"
       width={collapsed == true ? "60px" : "200px"}
       height="100vh"
+      color="white"
     >
       <Box display="flex" justifyContent="space-between" alignItems="center">
         {!collapsed && (
@@ -69,30 +87,38 @@ const Siderbar = () => {
           </Tooltip>
         </Box>
       </Box>
+      {!collapsed && followedUsers.length>0 &&
+      <Box mt="1.5rem" pl="1rem" opacity="50%">
+        Following
+      </Box>
+      }
+                {followedUsers.map((userFollowed:any,index:number)=>(
+          <Box key={index} mt="1rem" borderRadius="100px" ml="0.5rem" display="flex" gap="0.7rem" padding="8px" cursor="pointer"
+          onClick={()=>{
+            router.push(`/${userFollowed?.following.username}`)
+          }}
+          _hover={
+            {
+              background:"grey",
+              transition: "background 0.3s ease",
+            }
+          }>
+            <Avatar src={userFollowed?.following.imageUrl} size={collapsed==true ?"30":"20"} round={true} />
+                  {!collapsed &&<Text >
+                    {userFollowed?.following.username}
+                  </Text>}
+                </Box>
+        ))
+        
+
+        }
       {!collapsed &&
       <Box mt="1.5rem" pl="1rem" opacity="50%">
         Recommended
       </Box>
       }
-      <Box mt="1rem" cursor="pointer" padding="8px">
-        <Box borderRadius="100px" pl="0.5rem" display="flex" gap="0.7rem" padding="8px"
-        onClick={()=>{
-
-        }}
-        _hover={
-          {
-            background:"grey",
-            transition: "background 0.3s ease",
-          }
-        }
-        >
-          <Avatar src={user?.imageUrl} size={collapsed==true ?"30":"20"} round={true} />
-          {!collapsed &&<Text>
-            {user?.fullName}
-          </Text>}
-        </Box>
         {allUsers.map((userRecommded:any,index:number)=>(
-          <Box key={index} mt="1rem" borderRadius="100px" pl="0.5rem" display="flex" gap="0.7rem" padding="8px"
+          <Box key={index} mt="1rem" borderRadius="100px" ml="0.5rem" display="flex" gap="0.7rem" padding="8px" cursor="pointer"
           onClick={()=>{
             router.push(`/${userRecommded?.username}`)
           }}
@@ -103,14 +129,12 @@ const Siderbar = () => {
             }
           }>
             <Avatar src={userRecommded?.imageUrl} size={collapsed==true ?"30":"20"} round={true} />
-                  {!collapsed &&<Text>
+                  {!collapsed &&<Text >
                     {userRecommded?.username}
                   </Text>}
                 </Box>
         ))
-
         }
-      </Box>
     </Box>
   );
 };
